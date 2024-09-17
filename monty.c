@@ -1,5 +1,5 @@
 #include "monty.h"
-#include <ctype.h>  // لإصلاح التحذير بشأن isdigit
+#include <ctype.h> 
 #include <fcntl.h>
 #include <unistd.h>
 
@@ -30,7 +30,6 @@ int main(int argc, char *argv[]) {
         if (!opcode || opcode[0] == '#') {
             continue;
         }
-
         if (strcmp(opcode, "push") == 0) {
             if (!arg_str || !isdigit(*arg_str)) {
                 fprintf(stderr, "L%u: usage: push integer\n", line_number);
@@ -49,6 +48,10 @@ int main(int argc, char *argv[]) {
         {
             swap(&stack, line_number);
         }
+        else if (strcmp(opcode, "sub") == 0)
+        {
+            sub(&stack, line_number);
+        }
 
         else if (strcmp(opcode, "add") == 0)
         {
@@ -56,6 +59,30 @@ int main(int argc, char *argv[]) {
         }
         else if (strcmp(opcode, "nop") == 0) {
             nop(&stack, line_number);
+        }
+
+        else if (strcmp(opcode, "div") == 0) {
+            div_two_one(&stack, line_number);
+        } 
+        else if (strcmp(opcode, "mul") == 0) {
+            mul(&stack, line_number);
+        } 
+        else if (strcmp(opcode, "mod") == 0) {
+            mod(&stack, line_number);
+        } 
+        else if (strcmp(opcode, "pchar") == 0) {
+            pchar(&stack, line_number);
+        }
+        else if (strcmp(opcode, "pstr") == 0) {
+            pstr(&stack, line_number);
+        }
+
+        else if (strcmp(opcode, "rotl") == 0) {
+            rotl(&stack, line_number);
+        }
+
+        else if (strcmp(opcode, "rotr") == 0) {
+            rotr(&stack, line_number);
         }
 
         else {

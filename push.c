@@ -26,3 +26,64 @@ void push(stack_t **stack, unsigned int line_number, int n) {
 
     *stack = new_node;
 }
+
+void pall(stack_t **stack, unsigned int line_number) {
+    stack_t *temp = *stack;
+
+    while (temp != NULL) {
+        printf("%d\n", temp->n);
+        temp = temp->next;
+    }
+}
+
+
+void pint(stack_t **stack, unsigned int line_number) {
+    if (*stack == NULL) {
+        fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("%d\n", (*stack)->n);
+}
+
+void pop(stack_t **stack, unsigned int line_number){
+    if (stack == NULL || *stack == NULL) {
+        fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+    stack_t *temp = *stack;
+    *stack = temp->next;
+    if (*stack != NULL) {
+        (*stack)->prev = NULL;
+    }
+    free(temp);
+}  
+
+
+void swap(stack_t **stack, unsigned int line_number){
+
+    if (*stack == NULL || (*stack)->next == NULL) {
+        fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
+    stack_t *first = *stack;
+    stack_t *second = (*stack)->next;
+
+    first->next = second->next;
+    second->next = first;
+    second->prev = NULL;
+    
+    if (first->next != NULL) {
+        first->next->prev = first;
+    }
+
+    *stack = second;
+}
+
+
+
+void nop(stack_t **stack, unsigned int line_number) {
+    (void)stack;     
+    (void)line_number; 
+}
